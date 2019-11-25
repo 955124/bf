@@ -95,5 +95,21 @@ windows：https://github.com/shadowsocksrr/shadowsocksr-csharp/releases
 android：https://github.com/shadowsocksrr/shadowsocksr-android/releases
 mac os：https://github.com/qinyuhang/ShadowsocksX-NG-R/releases/
 
- yum update -y && yum install curl -y       (2).yum install wget
-
+ yum update -y && yum install curl -y（2）.yum安装wget
+------------------------------------------------------------------------------------------------------
+233一键脚本nginx共存
+配置文件
+server {
+  listen  443 ssl http2; # 如果你木有添加 HTTP2 模块，请删除 http2
+  server_name           233blog.com; # 将 233blog.com 修改成你的域名
+  ssl_certificate       /home/ssl/233blog.com.crt; # 证书
+  ssl_certificate_key   /home/ssl/233blog.com.key; # 密钥
+  ssl_protocols         TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers           HIGH:!aNULL:!MD5;
+        location / {
+        proxy_pass http://localhost:2333; # 2333 为 V2Ray 端口
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        }
+}
